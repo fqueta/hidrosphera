@@ -1,37 +1,32 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock,
-  Send,
-  Loader2
-} from 'lucide-react';
-import { FaWhatsapp } from 'react-icons/fa';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { MapPin, Phone, Mail, Clock, Send, Loader2 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   });
   const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -40,13 +35,16 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://n8n.maisaqui.com.br/webhook/formulario-hidrosphera', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await fetch(
+        "https://n8n.maisaqui.com.br/webhook/formulario-hidrosphera",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         toast({
@@ -54,15 +52,15 @@ const Contact = () => {
           description: "Entraremos em contato em até 24 horas.",
         });
         setFormData({
-          name: '',
-          company: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: ''
+          name: "",
+          company: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
         });
       } else {
-        throw new Error('Falha no envio');
+        throw new Error("Falha no envio");
       }
     } catch (error) {
       toast({
@@ -77,24 +75,32 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Endereço',
-      details: ['Rua Manoel Vilar, 13 Loja 4', 'Democrata - Juiz de Fora/MG', 'CEP: 36035-240']
+      title: "Endereço",
+      details: [
+        "Rua Manoel Vilar, 13 Loja 4",
+        "Democrata - Juiz de Fora/MG",
+        "CEP: 36035-240",
+      ],
     },
     {
       icon: FaWhatsapp,
-      title: 'WhatsApp',
-      details: ['(32) 98411-1197']
+      title: "WhatsApp",
+      details: ["(32) 98411-1197"],
     },
     {
       icon: Mail,
-      title: 'E-mail',
-      details: ['hidrosphera@gmail.com']
+      title: "E-mail",
+      details: ["hidrosphera@gmail.com"],
     },
     {
       icon: Clock,
-      title: 'Horário',
-      details: ['Segunda à Quinta: 8h às 18h', 'Sexta: 8h às 17h', 'Plantão 24h para emergências']
-    }
+      title: "Horário",
+      details: [
+        "Segunda à Quinta: 8h às 18h",
+        "Sexta: 8h às 17h",
+        "Plantão 24h para emergências",
+      ],
+    },
   ];
 
   return (
@@ -107,8 +113,9 @@ const Contact = () => {
               Entre em <span className="text-primary">Contato</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Pronto para transformar seus desafios ambientais em soluções sustentáveis? 
-              Nossa equipe está aqui para ajudar você a alcançar seus objetivos.
+              Pronto para transformar seus desafios ambientais em soluções
+              sustentáveis? Nossa equipe está aqui para ajudar você a alcançar
+              seus objetivos.
             </p>
           </div>
 
@@ -121,7 +128,10 @@ const Contact = () => {
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-6">
                   {contactInfo.map((item, index) => (
-                    <Card key={index} className="border-border/50 hover:shadow-card transition-shadow duration-300">
+                    <Card
+                      key={index}
+                      className="border-border/50 hover:shadow-card transition-shadow duration-300"
+                    >
                       <CardHeader className="pb-3">
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
@@ -135,7 +145,10 @@ const Contact = () => {
                       <CardContent className="pt-0">
                         <div className="space-y-1">
                           {item.details.map((detail, idx) => (
-                            <p key={idx} className="text-sm text-muted-foreground">
+                            <p
+                              key={idx}
+                              className="text-sm text-muted-foreground"
+                            >
                               {detail}
                             </p>
                           ))}
@@ -162,10 +175,15 @@ const Contact = () => {
                           Agende uma avaliação inicial sem compromisso
                         </p>
                       </div>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
-                        onClick={() => window.open('https://wa.me/5555328411119?text=Ol%C3%A1%20preciso%20de%20ajuda', '_blank')}
+                        onClick={() =>
+                          window.open(
+                            "https://wa.me/553284111197?text=Ol%C3%A1%20preciso%20de%20ajuda",
+                            "_blank"
+                          )
+                        }
                       >
                         Agendar
                       </Button>
@@ -187,10 +205,15 @@ const Contact = () => {
                           Suporte 24h para emergências ambientais
                         </p>
                       </div>
-                      <Button 
-                        variant="secondary" 
+                      <Button
+                        variant="secondary"
                         size="sm"
-                        onClick={() => window.open('https://wa.me/5555328411119?text=Ol%C3%A1%20preciso%20de%20ajuda', '_blank')}
+                        onClick={() =>
+                          window.open(
+                            "https://wa.me/553284111197?text=Ol%C3%A1%20preciso%20de%20ajuda",
+                            "_blank"
+                          )
+                        }
                       >
                         Falar Agora
                       </Button>
@@ -207,7 +230,8 @@ const Contact = () => {
                   Envie sua Mensagem
                 </CardTitle>
                 <p className="text-muted-foreground">
-                  Preencha o formulário abaixo e entraremos em contato em até 24 horas.
+                  Preencha o formulário abaixo e entraremos em contato em até 24
+                  horas.
                 </p>
               </CardHeader>
               <CardContent>
@@ -215,9 +239,9 @@ const Contact = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Nome Completo</Label>
-                      <Input 
-                        id="name" 
-                        placeholder="Seu nome completo" 
+                      <Input
+                        id="name"
+                        placeholder="Seu nome completo"
                         value={formData.name}
                         onChange={handleInputChange}
                         required
@@ -225,9 +249,9 @@ const Contact = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="company">Empresa</Label>
-                      <Input 
-                        id="company" 
-                        placeholder="Nome da empresa" 
+                      <Input
+                        id="company"
+                        placeholder="Nome da empresa"
                         value={formData.company}
                         onChange={handleInputChange}
                       />
@@ -237,10 +261,10 @@ const Contact = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="email">E-mail</Label>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        placeholder="seu@email.com" 
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="seu@email.com"
                         value={formData.email}
                         onChange={handleInputChange}
                         required
@@ -248,9 +272,9 @@ const Contact = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Telefone</Label>
-                      <Input 
-                        id="phone" 
-                        placeholder="(11) 99999-9999" 
+                      <Input
+                        id="phone"
+                        placeholder="(11) 99999-9999"
                         value={formData.phone}
                         onChange={handleInputChange}
                       />
@@ -259,9 +283,9 @@ const Contact = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="subject">Assunto</Label>
-                    <Input 
-                      id="subject" 
-                      placeholder="Como podemos ajudar?" 
+                    <Input
+                      id="subject"
+                      placeholder="Como podemos ajudar?"
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
@@ -270,9 +294,9 @@ const Contact = () => {
 
                   <div className="space-y-2" id="message">
                     <Label htmlFor="message">Mensagem</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Descreva seu projeto ou necessidade..." 
+                    <Textarea
+                      id="message"
+                      placeholder="Descreva seu projeto ou necessidade..."
                       rows={4}
                       value={formData.message}
                       onChange={handleInputChange}
@@ -280,11 +304,11 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    variant="hero" 
-                    size="lg" 
-                    className="w-full" 
+                  <Button
+                    type="submit"
+                    variant="hero"
+                    size="lg"
+                    className="w-full"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -292,11 +316,12 @@ const Contact = () => {
                     ) : (
                       <Send className="mr-2 w-5 h-5" />
                     )}
-                    {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
+                    {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
                   </Button>
 
                   <p className="text-xs text-muted-foreground text-center">
-                    Ao enviar este formulário, você concorda com nossa política de privacidade.
+                    Ao enviar este formulário, você concorda com nossa política
+                    de privacidade.
                   </p>
                 </form>
               </CardContent>
